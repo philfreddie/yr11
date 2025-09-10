@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YR11 Interactive Product</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .embed-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .figma-embed {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px;
+            margin: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            animation: modalAppear 0.3s ease-out forwards;
+        }
+
+        @keyframes modalAppear {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .modal-text {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .fullscreen-icon {
+            font-size: 48px;
+            margin: 20px 0;
+            color: #007AFF;
+        }
+
+        .close-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .close-button:hover {
+            background: #0056CC;
+        }
+
+        .close-button:active {
+            transform: translateY(1px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .figma-embed {
+                width: 100%;
+                height: 600px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .figma-embed {
+                height: 500px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal Overlay -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Welcome to YR11 Interactive Product</h2>
+            <div class="fullscreen-icon">⛶</div>
+            <p class="modal-text">
+                For the best experience, please click the <strong>fullscreen button</strong> 
+                in the top-right corner of the interactive prototype below.
+            </p>
+            <p class="modal-text">
+                This will allow you to fully interact with the YR11 Radio Station prototype.
+            </p>
+            <button id="closeModal" class="close-button">Got it, let's start!</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="embed-container">
+            <iframe 
+                class="figma-embed"
+                style="border: 1px solid rgba(0, 0, 0, 0.1);" 
+                width="1350" 
+                height="700" 
+                src="https://embed.figma.com/proto/Mxy2pdnwrc4VtmsCoXCtYs/YR11-Radiostation?node-id=9-3&p=f&scaling=contain&content-scaling=fixed&page-id=1%3A4&starting-point-node-id=9%3A3&hotspot-hints=0&embed-host=share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const closeButton = document.getElementById('closeModal');
+
+            // Close modal when button is clicked
+            closeButton.addEventListener('click', function() {
+                modalOverlay.classList.add('hidden');
+            });
+
+            // Close modal when clicking outside the modal content
+            modalOverlay.addEventListener('click', function(event) {
+                if (event.target === modalOverlay) {
+                    modalOverlay.classList.add('hidden');
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    modalOverlay.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
