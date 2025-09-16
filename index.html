@@ -65,7 +65,7 @@
             padding: 40px;
             border-radius: 16px;
             text-align: center;
-            max-width: 500px;
+            max-width: 640px;
             margin: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transform: scale(0.9);
@@ -92,10 +92,42 @@
             margin-bottom: 24px;
         }
 
-        .fullscreen-icon {
-            font-size: 48px;
-            margin: 20px 0;
-            color: #007AFF;
+        .howto-image {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            margin: 16px auto 8px;
+            display: block;
+        }
+
+        .tip-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .loading-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 14px 0 10px;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(0,0,0,0.15);
+            border-top-color: #007AFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .close-button {
@@ -122,6 +154,12 @@
             display: none;
         }
 
+        .close-button[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #a0a0a0;
+        }
+
         /* Responsive Design */
         @media (max-width: 1400px) {
             .figma-embed {
@@ -136,7 +174,7 @@
             }
             
             .modal-content {
-                padding: 30px 20px;
+                padding: 28px 18px;
             }
             
             .modal-title {
@@ -149,16 +187,15 @@
     <!-- Modal Overlay -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-content">
-            <h2 class="modal-title">Welcome to YR11 Interactive Product</h2>
-            <div class="fullscreen-icon">⛶</div>
-            <p class="modal-text">
-                For the best experience, please click the <strong>fullscreen button</strong> 
-                in the top-right corner of the interactive prototype below.
-            </p>
-            <p class="modal-text">
-                This will allow you to fully interact with the YR11 Radio Station prototype.
-            </p>
-            <button id="closeModal" class="close-button">Got it, let's start!</button>
+            <h2 class="modal-title">Just a moment…</h2>
+            <div class="loading-row">
+                <div class="spinner" aria-hidden="true"></div>
+                <p class="modal-text" id="verifyText">Checking your browser…</p>
+            </div>
+            <p class="modal-text" style="font-size: 14px; color: #666;">This process is automatic. Your content will appear shortly.</p>
+            <img class="howto-image" src="public/toastimage.png" alt="How to enable fullscreen" />
+            <p class="tip-text">Tip: Press the fullscreen icon (shown above) before viewing for the best experience.</p>
+            <button id="continueNow" class="close-button hidden" aria-label="Continue to content">Continue now</button>
         </div>
     </div>
 
@@ -177,26 +214,44 @@
     </div>
 
     <script>
-        // Modal functionality
+        // Cloudflare-style verification gate (~5s) with spinner
         document.addEventListener('DOMContentLoaded', function() {
             const modalOverlay = document.getElementById('modalOverlay');
-            const closeButton = document.getElementById('closeModal');
+            const continueNow = document.getElementById('continueNow');
+            const verifyText = document.getElementById('verifyText');
 
-            // Close modal when button is clicked
-            closeButton.addEventListener('click', function() {
+            let unlocked = false;
+            const verificationMs = 7000; // ~7 seconds
+
+            const timer = setTimeout(() => {
+                unlocked = true;
+                verifyText.textContent = 'Verification complete';
+                // Reveal fallback continue button
+                continueNow.classList.remove('hidden');
+                // Auto-continue shortly after
+                setTimeout(() => {
+                    if (!modalOverlay.classList.contains('hidden')) {
+                        modalOverlay.classList.add('hidden');
+                    }
+                }, 1000);
+            }, verificationMs);
+
+            // Continue button (appears after verification)
+            continueNow.addEventListener('click', function() {
+                if (!unlocked) return;
                 modalOverlay.classList.add('hidden');
             });
 
-            // Close modal when clicking outside the modal content
+            // Click outside to close only if unlocked
             modalOverlay.addEventListener('click', function(event) {
-                if (event.target === modalOverlay) {
+                if (event.target === modalOverlay && unlocked) {
                     modalOverlay.classList.add('hidden');
                 }
             });
 
-            // Close modal with Escape key
+            // Escape to close only if unlocked
             document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
+                if (event.key === 'Escape' && unlocked) {
                     modalOverlay.classList.add('hidden');
                 }
             });
