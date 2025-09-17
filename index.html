@@ -14,35 +14,35 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            overflow: hidden; /* Prevent body scroll */
+            height: 100vh;
+            width: 100vw;
         }
 
         .container {
-            width: 100%;
-            max-width: 1400px;
+            width: 100vw;
+            height: 100vh;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .embed-container {
             width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            padding: 0;
         }
 
         .figma-embed {
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            max-width: 100%;
-            height: auto;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            display: block;
         }
 
         /* Modal Styles */
@@ -58,15 +58,18 @@
             align-items: center;
             z-index: 1000;
             backdrop-filter: blur(5px);
+            padding: 16px;
         }
 
         .modal-content {
             background: white;
-            padding: 40px;
+            padding: 32px 24px;
             border-radius: 16px;
             text-align: center;
-            max-width: 640px;
-            margin: 20px;
+            width: 100%;
+            max-width: min(500px, 90vw);
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transform: scale(0.9);
             animation: modalAppear 0.3s ease-out forwards;
@@ -79,14 +82,14 @@
         }
 
         .modal-title {
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 24px);
             font-weight: 600;
             color: #333;
             margin-bottom: 16px;
         }
 
         .modal-text {
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             color: #666;
             line-height: 1.6;
             margin-bottom: 24px;
@@ -94,7 +97,7 @@
 
         .howto-image {
             width: 100%;
-            max-width: 480px;
+            max-width: min(360px, 80vw);
             height: auto;
             border-radius: 12px;
             border: 1px solid rgba(0,0,0,0.08);
@@ -104,9 +107,10 @@
         }
 
         .tip-text {
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             color: #555;
             margin-bottom: 20px;
+            line-height: 1.4;
         }
 
         .loading-row {
@@ -124,6 +128,7 @@
             border-top-color: #007AFF;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            flex-shrink: 0;
         }
 
         @keyframes spin {
@@ -136,10 +141,11 @@
             border: none;
             padding: 12px 24px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s;
+            min-height: 44px; /* Touch-friendly on mobile */
         }
 
         .close-button:hover {
@@ -160,25 +166,65 @@
             background: #a0a0a0;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1400px) {
-            .figma-embed {
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 24px 16px;
+                border-radius: 12px;
+                max-width: 95vw;
+            }
+            
+            .howto-image {
+                max-width: min(300px, 85vw);
+            }
+            
+            .close-button {
                 width: 100%;
-                height: 600px;
+                padding: 14px 24px;
             }
         }
 
-        @media (max-width: 768px) {
-            .figma-embed {
-                height: 500px;
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 20px 12px;
+                max-width: 98vw;
             }
             
+            .howto-image {
+                max-width: min(250px, 90vw);
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
             .modal-content {
-                padding: 28px 18px;
+                max-height: 95vh;
+                padding: 16px;
+            }
+            
+            .howto-image {
+                max-width: min(200px, 30vw);
             }
             
             .modal-title {
-                font-size: 20px;
+                margin-bottom: 8px;
+            }
+            
+            .modal-text {
+                margin-bottom: 12px;
+            }
+            
+            .tip-text {
+                margin-bottom: 12px;
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .howto-image {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
             }
         }
     </style>
@@ -192,7 +238,7 @@
                 <div class="spinner" aria-hidden="true"></div>
                 <p class="modal-text" id="verifyText">Checking your browser…</p>
             </div>
-            <p class="modal-text" style="font-size: 14px; color: #666;">This process is automatic. Your content will appear shortly.</p>
+            <p class="modal-text" style="font-size: clamp(12px, 2.5vw, 14px); color: #666;">This process is automatic. Your content will appear shortly.</p>
             <img class="howto-image" src="public/toastimage.png" alt="How to enable fullscreen" />
             <p class="tip-text">Tip: Press the fullscreen icon (shown above) before viewing for the best experience.</p>
             <button id="continueNow" class="close-button hidden" aria-label="Continue to content">Continue now</button>
@@ -204,10 +250,7 @@
         <div class="embed-container">
             <iframe 
                 class="figma-embed"
-                style="border: 1px solid rgba(0, 0, 0, 0.1);" 
-                width="1350" 
-                height="700" 
-                src="https://embed.figma.com/proto/Mxy2pdnwrc4VtmsCoXCtYs/YR11-Radiostation?node-id=9-3&p=f&scaling=contain&content-scaling=fixed&page-id=1%3A4&starting-point-node-id=9%3A3&hotspot-hints=0&embed-host=share" 
+                src="https://embed.figma.com/proto/Mxy2pdnwrc4VtmsCoXCtYs/YR11-Radiostation?node-id=9-3&p=f&scaling=contain&content-scaling=fixed&page-id=1%3A4&starting-point-node-id=9%3A3&hotspot-hin[...]
                 allowfullscreen>
             </iframe>
         </div>
