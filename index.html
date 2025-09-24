@@ -252,6 +252,333 @@
                 margin-bottom: 12px;
             }
         }
+
+        /* Vercel-style Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .music-trigger {
+            width: 48px;
+            height: 48px;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+
+        .music-trigger:hover {
+            transform: scale(1.05);
+            background: #1a1a1a;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .music-trigger svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+            transition: all 0.15s ease;
+        }
+
+        .music-panel {
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            width: 280px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: scale(0.95) translateY(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .music-panel.active {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .music-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .music-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #000;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .music-subtitle {
+            font-size: 12px;
+            color: #666;
+            margin: 2px 0 0 0;
+            font-weight: 400;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #000;
+        }
+
+        .playback-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            background: #000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            background: #1a1a1a;
+        }
+
+        .play-btn:active {
+            transform: scale(0.98);
+        }
+
+        .play-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.04);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            color: #666;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+            color: #000;
+        }
+
+        .control-btn.active {
+            background: #000;
+            color: #fff;
+        }
+
+        .control-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .volume-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .volume-icon {
+            width: 24px;
+            height: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: color 0.15s ease;
+        }
+
+        .volume-icon:hover {
+            color: #000;
+        }
+
+        .volume-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 1px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+        }
+
+        /* Status indicator */
+        .status-dot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.15s ease;
+        }
+
+        .music-trigger.playing .status-dot {
+            opacity: 1;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .music-player {
+                bottom: 16px;
+                right: 16px;
+            }
+            
+            .music-panel {
+                width: calc(100vw - 80px);
+                max-width: 280px;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .music-panel {
+                background: rgba(0, 0, 0, 0.9);
+                border-color: rgba(255, 255, 255, 0.1);
+                color: #fff;
+            }
+
+            .music-title {
+                color: #fff;
+            }
+
+            .music-subtitle {
+                color: #999;
+            }
+
+            .close-btn {
+                color: #999;
+            }
+
+            .close-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+            }
+
+            .control-btn {
+                background: rgba(255, 255, 255, 0.1);
+                color: #999;
+            }
+
+            .control-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+                color: #fff;
+            }
+
+            .control-btn.active {
+                background: #fff;
+                color: #000;
+            }
+
+            .volume-icon {
+                color: #999;
+            }
+
+            .volume-icon:hover {
+                color: #fff;
+            }
+
+            .volume-slider {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .volume-slider::-webkit-slider-thumb {
+                background: #fff;
+            }
+
+            .volume-slider::-moz-range-thumb {
+                background: #fff;
+            }
+        }
     </style>
 </head>
 <body>
@@ -278,11 +605,68 @@
                 style="border: 1px solid rgba(0, 0, 0, 0.1);" 
                 width="1350" 
                 height="700" 
-                src="https://embed.figma.com/proto/Mxy2pdnwrc4VtmsCoXCtYs/YR11-Radiostation?node-id=9-3&p=f&scaling=contain&content-scaling=fixed&page-id=1%3A4&starting-point-node-id=9%3A3&hotspot-hints=0&embed-host=share" 
+                src="https://embed.figma.com/proto/Mxy2pdnwrc4VtmsCoXCtYs/YR11-Radiostation?node-id=9-3&p=f&scaling=contain&content-scaling=fixed&page-id=1%3A4&starting-point-node-id=9%3A3&hotspot-hints=0&hide-ui=1"
                 allowfullscreen>
             </iframe>
         </div>
     </div>
+
+    <!-- Vercel-style Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-trigger" id="musicTrigger" aria-label="Toggle music player">
+            <div class="status-dot"></div>
+            <svg viewBox="0 0 24 24" id="musicIcon">
+                <path d="M12 3V13.55C11.41 13.21 10.73 13 10 13C7.79 13 6 14.79 6 17S7.79 21 10 21 14 19.21 14 17V7H18V3H12Z"/>
+            </svg>
+        </button>
+        
+        <div class="music-panel" id="musicPanel">
+            <div class="music-header">
+                <div>
+                    <h3 class="music-title">YR11 Radio</h3>
+                    <p class="music-subtitle">Background Audio</p>
+                </div>
+                <button class="close-btn" id="closePanel" aria-label="Close">×</button>
+            </div>
+            
+            <div class="playback-section">
+                <button class="play-btn" id="playPauseBtn" aria-label="Play/Pause">
+                    <svg viewBox="0 0 24 24" id="playIcon">
+                        <path d="M8 5V19L19 12L8 5Z"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" id="pauseIcon" style="display: none;">
+                        <path d="M6 4H10V20H6V4ZM14 4H18V20H14V4Z"/>
+                    </svg>
+                </button>
+                
+                <div class="control-buttons">
+                    <button class="control-btn active" id="loopBtn" aria-label="Loop" title="Loop">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7 7H17V10L21 6L17 2V5H5V11H7V7ZM17 17H7V14L3 18L7 22V19H19V13H17V17Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="volume-section">
+                <button class="volume-icon" id="muteBtn" aria-label="Mute/Unmute">
+                    <svg viewBox="0 0 24 24" id="volumeIcon">
+                        <path d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23M16.5 12C16.5 10.23 15.5 8.71 14 7.97V16.03C15.5 15.29 16.5 13.77 16.5 12M3 9V15H7L12 20V4L7 9H3Z"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" id="muteIcon" style="display: none;">
+                        <path d="M12 4L9.91 6.09L12 8.18M4.27 3L3 4.27L7.73 9H3V15H7L12 20V13.27L16.25 17.53C15.58 18.04 14.83 18.46 14 18.7V20.76C15.38 20.45 16.63 19.82 17.68 18.96L19.73 21L21 19.73L4.27 3Z"/>
+                    </svg>
+                </button>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70" aria-label="Volume">
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="public/YR11_Music.m4a" type="audio/mp4">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         // Cloudflare-style verification gate (~5s) with spinner
@@ -326,6 +710,188 @@
                     modalOverlay.classList.add('hidden');
                 }
             });
+        });
+
+        // Vercel-style Music Player Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const musicTrigger = document.getElementById('musicTrigger');
+            const musicPanel = document.getElementById('musicPanel');
+            const closePanel = document.getElementById('closePanel');
+            const audio = document.getElementById('backgroundMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            const loopBtn = document.getElementById('loopBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const volumeIcon = document.getElementById('volumeIcon');
+            const muteIcon = document.getElementById('muteIcon');
+            const volumeSlider = document.getElementById('volumeSlider');
+
+            let isPlaying = false;
+            let isMuted = false;
+            let previousVolume = 0.7;
+            let panelOpen = false;
+
+            // Initialize audio
+            audio.volume = 0.7;
+            audio.loop = true;
+
+            // Auto-start music after modal closes
+            function startMusicAfterModal() {
+                const modalOverlay = document.getElementById('modalOverlay');
+                const checkModal = setInterval(() => {
+                    if (modalOverlay.classList.contains('hidden') || modalOverlay.style.display === 'none') {
+                        clearInterval(checkModal);
+                        setTimeout(() => {
+                            playMusic();
+                        }, 500);
+                    }
+                }, 100);
+            }
+
+            function playMusic() {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updatePlayButton();
+                    updateTriggerState();
+                }).catch((error) => {
+                    console.log('Auto-play prevented by browser:', error);
+                });
+            }
+
+            function pauseMusic() {
+                audio.pause();
+                isPlaying = false;
+                updatePlayButton();
+                updateTriggerState();
+            }
+
+            function updatePlayButton() {
+                if (isPlaying) {
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                } else {
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                }
+            }
+
+            function updateTriggerState() {
+                if (isPlaying) {
+                    musicTrigger.classList.add('playing');
+                } else {
+                    musicTrigger.classList.remove('playing');
+                }
+            }
+
+            function updateMuteButton() {
+                if (isMuted) {
+                    volumeIcon.style.display = 'none';
+                    muteIcon.style.display = 'block';
+                } else {
+                    volumeIcon.style.display = 'block';
+                    muteIcon.style.display = 'none';
+                }
+            }
+
+            function updateLoopButton() {
+                if (audio.loop) {
+                    loopBtn.classList.add('active');
+                } else {
+                    loopBtn.classList.remove('active');
+                }
+            }
+
+            function togglePanel() {
+                panelOpen = !panelOpen;
+                if (panelOpen) {
+                    musicPanel.classList.add('active');
+                } else {
+                    musicPanel.classList.remove('active');
+                }
+            }
+
+            // Event listeners
+            musicTrigger.addEventListener('click', togglePanel);
+            closePanel.addEventListener('click', togglePanel);
+
+            // Close panel when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!musicTrigger.contains(event.target) && !musicPanel.contains(event.target)) {
+                    if (panelOpen) {
+                        panelOpen = false;
+                        musicPanel.classList.remove('active');
+                    }
+                }
+            });
+
+            playPauseBtn.addEventListener('click', function() {
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+            });
+
+            loopBtn.addEventListener('click', function() {
+                audio.loop = !audio.loop;
+                updateLoopButton();
+            });
+
+            muteBtn.addEventListener('click', function() {
+                if (isMuted) {
+                    audio.volume = previousVolume;
+                    volumeSlider.value = previousVolume * 100;
+                    isMuted = false;
+                } else {
+                    previousVolume = audio.volume;
+                    audio.volume = 0;
+                    volumeSlider.value = 0;
+                    isMuted = true;
+                }
+                updateMuteButton();
+            });
+
+            volumeSlider.addEventListener('input', function() {
+                const volume = this.value / 100;
+                audio.volume = volume;
+                
+                if (volume === 0) {
+                    isMuted = true;
+                } else {
+                    isMuted = false;
+                    previousVolume = volume;
+                }
+                updateMuteButton();
+            });
+
+            // Audio event listeners
+            audio.addEventListener('play', function() {
+                isPlaying = true;
+                updatePlayButton();
+                updateTriggerState();
+            });
+
+            audio.addEventListener('pause', function() {
+                isPlaying = false;
+                updatePlayButton();
+                updateTriggerState();
+            });
+
+            audio.addEventListener('ended', function() {
+                isPlaying = false;
+                updatePlayButton();
+                updateTriggerState();
+            });
+
+            // Initialize UI
+            updatePlayButton();
+            updateMuteButton();
+            updateLoopButton();
+            updateTriggerState();
+
+            // Start music after modal
+            startMusicAfterModal();
         });
     </script>
 </body>
