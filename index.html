@@ -71,12 +71,37 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transform: scale(0.9);
             animation: modalAppear 0.3s ease-out forwards;
+            position: relative;
         }
 
         @keyframes modalAppear {
             to {
                 transform: scale(1);
             }
+        }
+
+        /* Modal Close Button */
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
         }
 
         .modal-title {
@@ -93,6 +118,107 @@
             margin-bottom: 24px;
         }
 
+        /* Flip Chart Countdown */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .flip-digit {
+            position: relative;
+            width: 48px;
+            height: 64px;
+            background: #000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .digit-number {
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .flip-animation {
+            animation: flipDown 0.6s ease-in-out;
+        }
+
+        @keyframes flipDown {
+            0% { transform: rotateX(0deg); }
+            50% { transform: rotateX(-90deg); }
+            100% { transform: rotateX(0deg); }
+        }
+
+        .countdown-separator {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0 4px;
+        }
+
+        /* Enhanced Fullscreen Instructions */
+        .fullscreen-instruction {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fullscreen-instruction::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%);
+            background-size: 8px 8px;
+            animation: shimmer 2s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-8px); }
+            100% { transform: translateX(8px); }
+        }
+
+        .fullscreen-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fullscreen-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-text {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
         .howto-image {
             width: 100%;
             max-width: 480px;
@@ -102,12 +228,20 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.08);
             margin: 16px auto 8px;
             display: block;
+            border: 3px solid #007AFF;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { border-color: #007AFF; box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.7); }
+            50% { border-color: #5856D6; box-shadow: 0 0 0 8px rgba(0, 122, 255, 0); }
         }
 
         .tip-text {
             font-size: 14px;
             color: #555;
             margin-bottom: 20px;
+            font-weight: 500;
         }
 
         .loading-row {
@@ -191,6 +325,19 @@
             .howto-image {
                 max-width: 300px;
             }
+
+            .flip-digit {
+                width: 36px;
+                height: 48px;
+            }
+
+            .digit-number {
+                font-size: 20px;
+            }
+
+            .countdown-separator {
+                font-size: 18px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -226,6 +373,19 @@
             .close-button {
                 width: 100%;
                 min-height: 44px;
+            }
+
+            .flip-digit {
+                width: 32px;
+                height: 42px;
+            }
+
+            .digit-number {
+                font-size: 18px;
+            }
+
+            .countdown-separator {
+                font-size: 16px;
             }
         }
 
@@ -294,7 +454,7 @@
             position: absolute;
             bottom: 60px;
             right: 0;
-            width: 280px;
+            width: 320px;
             background: #fff;
             border: 1px solid rgba(0, 0, 0, 0.08);
             border-radius: 16px;
@@ -353,6 +513,54 @@
         .close-btn:hover {
             background: rgba(0, 0, 0, 0.05);
             color: #000;
+        }
+
+        /* Progress Bar Section */
+        .progress-section {
+            margin-bottom: 16px;
+        }
+
+        .progress-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .progress-container {
+            position: relative;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #000, #333);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .progress-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            left: 0%;
+        }
+
+        .progress-container:hover .progress-handle {
+            opacity: 1;
         }
 
         .playback-section {
@@ -515,7 +723,7 @@
             
             .music-panel {
                 width: calc(100vw - 80px);
-                max-width: 280px;
+                max-width: 320px;
             }
         }
 
@@ -578,6 +786,22 @@
             .volume-slider::-moz-range-thumb {
                 background: #fff;
             }
+
+            .progress-container {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .progress-bar {
+                background: linear-gradient(90deg, #fff, #ccc);
+            }
+
+            .progress-handle {
+                background: #fff;
+            }
+
+            .progress-time {
+                color: #999;
+            }
         }
     </style>
 </head>
@@ -585,14 +809,40 @@
     <!-- Modal Overlay -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-content">
+            <button id="modalCloseBtn" class="modal-close-btn" aria-label="Close modal">×</button>
+            
             <h2 class="modal-title">Just a moment…</h2>
+            
+            <!-- Countdown Display -->
+            <div class="countdown-container">
+                <div class="flip-digit">
+                    <span class="digit-number" id="seconds-tens">0</span>
+                </div>
+                <div class="flip-digit">
+                    <span class="digit-number" id="seconds-ones">7</span>
+                </div>
+                <div class="countdown-separator">s</div>
+            </div>
+            
             <div class="loading-row">
                 <div class="spinner" aria-hidden="true"></div>
                 <p class="modal-text" id="verifyText">Checking your browser…</p>
             </div>
             <p class="modal-text" style="font-size: 14px; color: #666;">This process is automatic. Your content will appear shortly.</p>
+            
+            <!-- Enhanced Fullscreen Instructions -->
+            <div class="fullscreen-instruction">
+                <div class="fullscreen-title">
+                    <div class="fullscreen-icon">⛶</div>
+                    Click Fullscreen for Best Experience
+                </div>
+                <div class="fullscreen-text">
+                    Look for the fullscreen button (⛶) in the bottom-right corner of the content area and click it before viewing.
+                </div>
+            </div>
+            
             <img class="howto-image" src="public/toastimage.png" alt="How to enable fullscreen" />
-            <p class="tip-text">Tip: Press the fullscreen icon (shown above) before viewing for the best experience.</p>
+            <p class="tip-text">👆 Press the fullscreen icon (shown above) before viewing for the best experience.</p>
             <button id="continueNow" class="close-button hidden" aria-label="Continue to content">Continue now</button>
         </div>
     </div>
@@ -628,6 +878,18 @@
                 </div>
                 <button class="close-btn" id="closePanel" aria-label="Close">×</button>
             </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <div class="progress-time">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">0:00</span>
+                </div>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-handle" id="progressHandle"></div>
+                </div>
+            </div>
             
             <div class="playback-section">
                 <button class="play-btn" id="playPauseBtn" aria-label="Play/Pause">
@@ -651,7 +913,7 @@
             <div class="volume-section">
                 <button class="volume-icon" id="muteBtn" aria-label="Mute/Unmute">
                     <svg viewBox="0 0 24 24" id="volumeIcon">
-                        <path d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23M16.5 12C16.5 10.23 15.5 8.71 14 7.97V16.03C15.5 15.29 16.5 13.77 16.5 12M3 9V15H7L12 20V4L7 9H3Z"/>
+                        <path d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23M16.5 12C16.5 10.23 15.5 8.71 14 7.97V16.02C15.5 15.29 16.5 13.77 16.5 12M3 9V15H7L12 20V4L7 9H3Z"/>
                     </svg>
                     <svg viewBox="0 0 24 24" id="muteIcon" style="display: none;">
                         <path d="M12 4L9.91 6.09L12 8.18M4.27 3L3 4.27L7.73 9H3V15H7L12 20V13.27L16.25 17.53C15.58 18.04 14.83 18.46 14 18.7V20.76C15.38 20.45 16.63 19.82 17.68 18.96L19.73 21L21 19.73L4.27 3Z"/>
@@ -669,14 +931,64 @@
     </audio>
 
     <script>
-        // Cloudflare-style verification gate (~5s) with spinner
+        // Format time helper function
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Flip Chart Countdown
+        function initCountdown() {
+            const secondsTens = document.getElementById('seconds-tens');
+            const secondsOnes = document.getElementById('seconds-ones');
+            let countdown = 7;
+
+            function updateDisplay(value) {
+                const tens = Math.floor(value / 10);
+                const ones = value % 10;
+                
+                if (secondsTens.textContent !== tens.toString()) {
+                    secondsTens.classList.add('flip-animation');
+                    setTimeout(() => {
+                        secondsTens.textContent = tens;
+                        secondsTens.classList.remove('flip-animation');
+                    }, 300);
+                }
+                
+                if (secondsOnes.textContent !== ones.toString()) {
+                    secondsOnes.classList.add('flip-animation');
+                    setTimeout(() => {
+                        secondsOnes.textContent = ones;
+                        secondsOnes.classList.remove('flip-animation');
+                    }, 300);
+                }
+            }
+
+            const timer = setInterval(() => {
+                countdown--;
+                updateDisplay(countdown);
+                
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                }
+            }, 1000);
+
+            updateDisplay(countdown);
+        }
+
+        // Enhanced Modal with countdown and close button
         document.addEventListener('DOMContentLoaded', function() {
             const modalOverlay = document.getElementById('modalOverlay');
             const continueNow = document.getElementById('continueNow');
             const verifyText = document.getElementById('verifyText');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
 
             let unlocked = false;
             const verificationMs = 7000; // ~7 seconds
+
+            // Initialize countdown
+            initCountdown();
 
             const timer = setTimeout(() => {
                 unlocked = true;
@@ -690,6 +1002,13 @@
                     }
                 }, 1000);
             }, verificationMs);
+
+            // Modal close button functionality
+            modalCloseBtn.addEventListener('click', function() {
+                if (unlocked) {
+                    modalOverlay.classList.add('hidden');
+                }
+            });
 
             // Continue button (appears after verification)
             continueNow.addEventListener('click', function() {
@@ -712,7 +1031,7 @@
             });
         });
 
-        // Vercel-style Music Player Functionality
+        // Enhanced Music Player with Progress Bar
         document.addEventListener('DOMContentLoaded', function() {
             const musicTrigger = document.getElementById('musicTrigger');
             const musicPanel = document.getElementById('musicPanel');
@@ -726,15 +1045,66 @@
             const volumeIcon = document.getElementById('volumeIcon');
             const muteIcon = document.getElementById('muteIcon');
             const volumeSlider = document.getElementById('volumeSlider');
+            
+            // Progress elements
+            const currentTimeEl = document.getElementById('currentTime');
+            const totalTimeEl = document.getElementById('totalTime');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressHandle = document.getElementById('progressHandle');
 
             let isPlaying = false;
             let isMuted = false;
             let previousVolume = 0.7;
             let panelOpen = false;
+            let isDragging = false;
 
             // Initialize audio
             audio.volume = 0.7;
             audio.loop = true;
+
+            // Progress bar functionality
+            function updateProgress() {
+                if (!isDragging && audio.duration) {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = progress + '%';
+                    progressHandle.style.left = progress + '%';
+                    currentTimeEl.textContent = formatTime(audio.currentTime);
+                }
+            }
+
+            function setProgress(event) {
+                const rect = progressContainer.getBoundingClientRect();
+                const percent = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+                if (audio.duration) {
+                    audio.currentTime = percent * audio.duration;
+                }
+            }
+
+            // Progress bar events
+            progressContainer.addEventListener('click', setProgress);
+            
+            progressContainer.addEventListener('mousedown', function(event) {
+                isDragging = true;
+                setProgress(event);
+            });
+
+            document.addEventListener('mousemove', function(event) {
+                if (isDragging) {
+                    setProgress(event);
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+
+            // Audio events for progress
+            audio.addEventListener('loadedmetadata', function() {
+                totalTimeEl.textContent = formatTime(audio.duration);
+            });
+
+            audio.addEventListener('timeupdate', updateProgress);
 
             // Auto-start music after modal closes
             function startMusicAfterModal() {
